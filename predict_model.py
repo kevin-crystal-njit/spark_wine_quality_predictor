@@ -12,7 +12,12 @@ if len(sys.argv) != 2:
 
 input_path = sys.argv[1]
 
-spark = SparkSession.builder.appName("MLPrediction").getOrCreate()
+spark = SparkSession.builder \
+    .appName("MLPrediction") \
+    .config("spark.hadoop.fs.s3a.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem") \
+    .config("spark.hadoop.fs.s3.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem") \
+    .config("spark.ui.showConsoleProgress", "false") \
+    .getOrCreate()
 
 logger = logging.getLogger('py4j')
 logger.setLevel(logging.ERROR)
@@ -37,4 +42,3 @@ print(f"\n=== Logistic Regression Model ===")
 print(f"F1 Score: {f1_score:.4f}")
 
 spark.stop()
-
