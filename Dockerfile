@@ -17,7 +17,6 @@ RUN wget https://archive.apache.org/dist/spark/spark-${SPARK_VERSION}/spark-${SP
 
 WORKDIR /app
 
-COPY train_model.py /app/
 COPY predict_model.py /app/
 
 # ENTRYPOINT forces S3 argument and always runs predict_model.py
