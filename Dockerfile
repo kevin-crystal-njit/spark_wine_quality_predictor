@@ -19,6 +19,5 @@ WORKDIR /app
 
 COPY predict_model.py /app/
 
-# ENTRYPOINT forces S3 argument and always runs predict_model.py
-ENTRYPOINT ["bash", "-c", "if [ -z \"$1\" ]; then echo 'ERROR: You must provide an S3 path as argument.'; exit 1; fi; exec spark-submit /app/predict_model.py \"$@\""]
+ENTRYPOINT ["spark-submit", "--packages", "org.apache.hadoop:hadoop-aws:3.3.4", "--conf", "spark.hadoop.fs.s3a.impl=org.apache.hadoop.fs.s3a.S3AFileSystem", "--conf", "spark.h$
 CMD []
